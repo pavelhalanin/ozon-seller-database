@@ -1,0 +1,379 @@
+## Что делает этот код
+
+Этот код скачивает данные продавца по API в папку `data`.
+Затем нормальзует данные из папки `data` в папку `database`.
+После чего добавляет данные из папки `database` в базу данных `database.sqlite`.
+
+## Как запустить
+
+Команда: `php main.php --download-all --normolize-all --save-to-sqlite`
+
+## Скачать только id продуктов
+
+Команда: `php main.php --download-v3-product-list`
+
+Результат: `/data/v3_product_list.json`
+
+API:
+- HTTP METHOD
+- HTTP HOST: `https://api-seller.ozon.ru`
+- HTTP URI: `/v3/product/list`
+- HTTP HEADERS:
+    - `Content-Type: application/json`
+    - `Client-Id` указать в env.php `ozon-client-id`
+    - `Api-Key` указать в env.php `ozon-api-key`
+- HTTP BODY: 
+    - `{"limit": 1000, "filter": {"visibility": "ALL"}}` - для скачивания 1000 карточек, кроме архивных
+    - `{"limit": 1000, "filter": {"visibility": "ARCHIVED"}}` - для скачивания 1000 архивных карточек
+
+<details>
+<summary>Пример элемента массива</summary>
+
+```json
+{
+    "product_id": 0,
+    "offer_id": "",
+    "has_fbo_stocks": false,
+    "has_fbs_stocks": false,
+    "archived": false,
+    "is_discounted": false,
+    "quants": []
+}
+```
+
+</details>
+
+## Скачать данные продуктов по их product_id
+
+Команда: `php main.php --download-v3-product-info-list`
+
+Результат: `/data/v3_product_info_list.json`
+
+API:
+- HTTP METHOD
+- HTTP HOST: `https://api-seller.ozon.ru`
+- HTTP URI: `/v3/product/info/list`
+- HTTP HEADERS:
+    - `Content-Type: application/json`
+    - `Client-Id` указать в env.php `ozon-client-id`
+    - `Api-Key` указать в env.php `ozon-api-key`
+- HTTP BODY: 
+    - `{"product_id": []}` - в массиве укажите id продуктов
+
+<details>
+<summary>Пример элемента массива</summary>
+
+```json
+{
+    "id": 0,
+    "name": "",
+    "offer_id": "",
+    "is_archived": false,
+    "is_autoarchived": false,
+    "barcodes": [
+        ""
+    ],
+    "description_category_id": 0,
+    "type_id": 0,
+    "created_at": "YYYY-MM-DDTHH:II:SS.MMMMMMZ",
+    "images": [
+        ""
+    ],
+    "currency_code": "RUB",
+    "marketing_price": "0.00",
+    "min_price": "0.00",
+    "old_price": "0.00",
+    "price": "0.00",
+    "sources": [
+        {
+            "sku": 0,
+            "source": "sds",
+            "created_at": "YYYY-MM-DDTHH:II:SS.MMMMMMZ",
+            "shipment_type": "SHIPMENT_TYPE_GENERAL",
+            "quant_code": ""
+        }
+    ],
+    "model_info": {
+        "model_id": 0,
+        "count": 0
+    },
+    "commissions": [
+        {
+            "delivery_amount": 0.0,
+            "percent": 0,
+            "return_amount": 0,
+            "sale_schema": "FBO",
+            "value": 0.0
+        },
+        {
+            "delivery_amount": 0.0,
+            "percent": 0,
+            "return_amount": 0,
+            "sale_schema": "FBS",
+            "value": 0
+        },
+        {
+            "percent": 0,
+            "sale_schema": "RFBS",
+            "value": 0
+        },
+        {
+            "percent": 0,
+            "sale_schema": "FBP",
+            "value": 0
+        }
+    ],
+    "is_prepayment_allowed": false,
+    "volume_weight": 0.2,
+    "has_discounted_fbo_item": false,
+    "is_discounted": false,
+    "discounted_fbo_stocks": 0,
+    "stocks": {
+        "has_stock": false,
+        "stocks": [
+            {
+                "present": 0,
+                "reserved": 0,
+                "sku": 0,
+                "source": "fbs"
+            }
+        ]
+    },
+    "errors": [],
+    "updated_at": "YYYY-MM-DDTHH:II:SS.MMMMMMZ",
+    "vat": "0.0",
+    "visibility_details": {
+        "has_price": false,
+        "has_stock": false
+    },
+    "price_indexes": {
+        "color_index": "COLOR_INDEX_WITHOUT_INDEX",
+        "external_index_data": {
+            "minimal_price": "",
+            "minimal_price_currency": "RUB",
+            "price_index_value": 0
+        },
+        "ozon_index_data": {
+            "minimal_price": "",
+            "minimal_price_currency": "RUB",
+            "price_index_value": 0
+        },
+        "self_marketplaces_index_data": {
+            "minimal_price": "",
+            "minimal_price_currency": "RUB",
+            "price_index_value": 0
+        }
+    },
+    "images360": [],
+    "is_kgt": false,
+    "color_image": [],
+    "primary_image": [
+        ""
+    ],
+    "statuses": {
+        "status": "",
+        "status_failed": "",
+        "moderate_status": "",
+        "validation_status": "",
+        "status_name": "",
+        "status_description": "",
+        "is_created": false,
+        "status_tooltip": "",
+        "status_updated_at": "YYYY-MM-DDTHH:II:SS.MMMMMMZ"
+    },
+    "is_super": false,
+    "is_seasonal": false
+}
+```
+
+</details>
+
+## Скачать атрибуты продуктов по их product_id
+
+Команда: `php main.php --download-v4-product-info-attributes`
+
+Результат: `/data/v4_product_info_attributes.json`
+
+API:
+- HTTP METHOD
+- HTTP HOST: `https://api-seller.ozon.ru`
+- HTTP URI: `/v4/product/info/attributes`
+- HTTP HEADERS:
+    - `Content-Type: application/json`
+    - `Client-Id` указать в env.php `ozon-client-id`
+    - `Api-Key` указать в env.php `ozon-api-key`
+- HTTP BODY: 
+    - `{"filter": {"product_id": []}, "limit": 1000}` - в массиве укажите id продуктов
+
+<details>
+<summary>Пример элемента массива</summary>
+
+```json
+{
+    "id": 0,
+    "barcode": "",
+    "name": "",
+    "offer_id": "",
+    "height": 0,
+    "depth": 0,
+    "width": 0,
+    "dimension_unit": "mm",
+    "weight": 0,
+    "weight_unit": "g",
+    "description_category_id": 0,
+    "type_id": 0,
+    "primary_image": "",
+    "model_info": {
+        "model_id": 0,
+        "count": 0
+    },
+    "images": [
+        ""
+    ],
+    "pdf_list": [],
+    "attributes": [
+        {
+            "id": 0,
+            "complex_id": 0,
+            "values": [
+                {
+                    "dictionary_value_id": 0,
+                    "value": ""
+                }
+            ]
+        }
+    ],
+    "complex_attributes": [],
+    "color_image": "",
+    "sku": 0,
+    "barcodes": [
+        ""
+    ]
+}
+```
+
+</details>
+
+## Приведение /v3/product/list/ в номарльную форму базы данных
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductList_Products`
+- Поля:
+    - `product_id` - id продукта
+    - `offer_id` - артикул продавца
+    - `has_fbo_stocks` - имеются остатки на FBO ('0' - false, '1' - true)
+    - `has_fbs_stocks` - имеются остатки на FBS ('0' - false, '1' - true)
+    - `archived` - карточка в архиве ('0' - false, '1' - true)
+    - `is_discounted` - ('0' - false, '1' - true)
+
+## Приведение /v4/product/info/attributes/ в номарльную форму базы данных
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v4ProductInfoAttributes_Products`
+- Поля:
+    - `id` - id продукта
+    - `barcode` - штрихкод
+    - `name` - наименование
+    - `offer_id` - артикул продавца
+    - `height` - высота
+    - `depth` - глубина
+    - `width` - ширина
+    - `dimension_unit` - единица длины ('mm')
+    - `weight` - вес
+    - `weight_unit` - единица веса ('g')
+    - `description_category_id` - id категории
+    - `type_id` - id типа категории
+    - `primary_image` - ссылка на картинку
+    - `color_image` - ссылка на картинку цвета
+    - `sku` - артикул OZON
+    - `images` - ссылку на картинку через `;`
+    - `barcodes` - штрихкоды через `;`
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v4ProductInfoAttributes_ModelProducts`
+- Поля:
+    - `product_id` - id продукта
+    - `model_id` - id модели
+    - `count` - количество
+
+## Приведение /v3/product/info/list/ в номарльную форму базы данных
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductList_Products`
+- Поля:
+    - `id` - id продукта
+    - `name` - наименование
+    - `offer_id` - артикул продавца
+    - `description_category_id` - id категории
+    - `type_id` - id типа категории
+    - `created_at` - дата и время создания карточки
+    - `currency_code` - валюта ('RUB')
+    - `marketing_price` - цена для покупки по акции
+    - `min_price` - минимальная цена
+    - `old_price` - зачеркнутая цена
+    - `price` - цена для покупки
+    - `volume_weight` - объем в листрах
+    - `discounted_fbo_stocks`
+    - `updated_at` - дата и время обновления карточки
+    - `vat` - НДС
+    - `is_archived` - карточка в архиве (0 - false, 1 - true)
+    - `is_autoarchived` - карточка добавлена в архив автоматически (0 - false, 1 - true)
+    - `is_prepayment_allowed` - (0 - false, 1 - true)
+    - `has_discounted_fbo_item` - (0 - false, 1 - true)
+    - `is_discounted` - (0 - false, 1 - true)
+    - `is_kgt` - это крупно габоритный товар (0 - false, 1 - true)
+    - `is_super` - (0 - false, 1 - true)
+    - `is_seasonal` - (0 - false, 1 - true)
+    - `barcodes` - штрихкоды через `;`
+    - `images` - ссылки на картинки через `;`
+    - `images360` - ссылки на картинки через `;`
+    - `color_image` - ссылка на картинку цвета
+    - `primary_image` - ссылка на первую картинку
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductInfoList_ModelProducts`
+- Поля:
+    - `product_id` - id продукта
+    - `model_id` - id модели
+    - `count` - количество
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductInfoList_ProductCommissions`
+- Поля:
+    - `product_id` - id продукта
+    - `delivery_amount`
+    - `percent` - процент комиссии
+    - `return_amount`
+    - `sale_schema` - схема (FBO, FBS, RFBS, FBP)
+    - `value`
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductInfoList_ProductSources`
+- Поля:
+    - `product_id` - id продукта
+    - `sku` - артикул OZON
+    - `source`
+    - `created_at`
+    - `shipment_type`
+    - `quant_code`
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductInfoList_ProductStatuses`
+- Поля:
+    - `product_id` - id продукта
+    - `status` - статус (price_sent)
+    - `status_failed`
+    - `moderate_status` - статус (approved)
+    - `validation_status` - статус (success)
+    - `status_name` - статус (Продается)
+    - `status_description`
+    - `status_tooltip`
+    - `status_updated_at` - дата и время обновления статуса
+    - `is_created` - создан (0 - false, 1 - true)
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3ProductInfoList_ProductVisabilityDetails`
+- Поля:
+    - `product_id` - id продукта
+    - `has_price` - установлена цена (0 - false, 1 - true)
+    - `has_stock` - есть остатки (0 - false, 1 - true)
