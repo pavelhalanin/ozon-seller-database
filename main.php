@@ -30,6 +30,7 @@ try {
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3FinanceTransactionsList_TransactionPostings.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3FinanceTransactionsList_TransactionItems.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3FinanceTransactionsList_TransactionServices.php";
+    include_once "$HOME/_helpers/json-to-normal-json/DownloadImages.php";
     include_once "$HOME/_helpers/normal-json-to-database/SaveJsonToSqlite.php";
     include_once "$HOME/_helpers/normal-json-to-database/SaveNormalJsonToSqlite.php";
 
@@ -64,6 +65,7 @@ try {
                 SaveJson_v3FinanceTransactionsList_TransactionPostings::main();
                 SaveJson_v3FinanceTransactionsList_TransactionItems::main();
                 SaveJson_v3FinanceTransactionsList_TransactionServices::main();
+                DownloadImages::getAllImages();
                 break;
 
             case '--save-to-sqlite':
