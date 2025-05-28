@@ -285,6 +285,61 @@ API:
 
 </details>
 
+## Скачать транзакции
+
+Команда: `php main.php --download-v3-finance-transaction-list`
+
+Результат: `/data/v3_finance_transaction_list.json`
+
+API:
+- HTTP METHOD
+- HTTP HOST: `https://api-seller.ozon.ru`
+- HTTP URI: `/v3/finance/transaction/list`
+- HTTP HEADERS:
+    - `Content-Type: application/json`
+    - `Client-Id` указать в env.php `ozon-client-id`
+    - `Api-Key` указать в env.php `ozon-api-key`
+- HTTP BODY: 
+    - `{"filter": {"date": {"from" => "2025-05-01", "to" => "2025-05-31"}, "operation_type": [], "posting_number": "", "transaction_type": "all"}, "page" => 1, "page_size" => 1000}` - укажите from и to
+
+<details>
+<summary>Пример элемента массива</summary>
+
+```json
+{
+    "operation_id": 0,
+    "operation_type": "",
+    "operation_date": "YYYY-MM-DD hh:ii:ss",
+    "operation_type_name": "",
+    "delivery_charge": 0,
+    "return_delivery_charge": 0,
+    "accruals_for_sale": 0,
+    "sale_commission": 0.0,
+    "amount": 0,
+    "type": "",
+    "posting": {
+        "delivery_schema": "",
+        "order_date": "YYYY-MM-DD hh:ii:ss",
+        "posting_number": "",
+        "warehouse_id": 0
+    },
+    "items": [
+        {
+            "name": "",
+            "sku": 0
+        }
+    ],
+    "services": [
+        {
+            "name": "",
+            "price": 0
+        }
+    ]
+}
+```
+
+</details>
+
 ## Приведение /v3/product/list/ в номарльную форму базы данных
 
 База данных: `database.sqlite`
@@ -408,3 +463,67 @@ API:
     - `product_id` - id продукта
     - `has_price` - установлена цена (0 - false, 1 - true)
     - `has_stock` - есть остатки (0 - false, 1 - true)
+
+## Приведение /v3/finance/transaction/list/ в номарльную форму базы данных
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3FinanceTransactionsList_Transactions`
+- Поля:
+    - `custom_auto_increment` - авто инкремент
+    - `operation_id` - id транзакции
+    - `operation_type` - код транзакции
+        - `MarketplaceRedistributionOfAcquiringOperation`
+        - `OperationAgentDeliveredToCustomer`
+        - `ClientReturnAgentOperation`
+        - `OperationAgentStornoDeliveredToCustomer`
+        - `OperationReturnGoodsFBSofRMS`
+        - `MarketplaceSellerCompensationOperation`
+    - `operation_date` - дата транзакции
+    - `operation_type_name` - наименование транзации:
+        - `Оплата эквайринга`
+        - `Доставка покупателю`
+        - `Получение возврата, отмены, невыкупа от покупателя`
+        - `Доставка покупателю — отмена начисления`
+        - `Доставка и обработка возврата, отмены, невыкупа`
+        - `Прочие компенсации`
+    - `delivery_charge`
+    - `return_delivery_charge`
+    - `accruals_for_sale`
+    - `sale_commission`
+    - `amount` - итого (RUB)
+    - `type` - тип
+        - `other`
+        - `orders`
+        - `returns`
+        - `compensation`
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3FinanceTransactionsList_TransactionPostings`
+- Поля:
+    - `custom_auto_increment` - авто инкремент
+    - `operation_id` - id транзакции
+    - `delivery_schema`
+        - ` `
+        - `FBS`
+        - `FBO`
+    - `order_date` - дата заказа
+    - `posting_number` - номер заказа
+    - `warehouse_id` - id склада
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3FinanceTransactionsList_TransactionItems`
+- Поля:
+    - `custom_auto_increment` - авто инкремент
+    - `custom_id` - мой произвольный id (`<operation_id>.services[<i>]`)
+    - `operation_id` - id транзакции
+    - `name` - наименование продукта
+    - `sku` - артикул OZON
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v3FinanceTransactionsList_TransactionServices`
+- Поля:
+    - `custom_auto_increment` - авто инкремент
+    - `custom_id` - мой произвольный id (`<operation_id>.services[<i>]`)
+    - `operation_id` - id транзакции
+    - `name` - наименование продукта
+    - `price` - цена
