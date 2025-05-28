@@ -12,6 +12,7 @@ try {
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductList_Products.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_Products.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_ModelProducts.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_Images.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_Attributes.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_AttributesValues.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_Products.php";
@@ -20,6 +21,11 @@ try {
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_ModelProducts.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_ProductVisabilityDetails.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_ProductStatuses.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_Barcodes.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_Images.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_360Images.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_PrimaryImages.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_ColorImages.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3FinanceTransactionsList_Transactions.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3FinanceTransactionsList_TransactionPostings.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3FinanceTransactionsList_TransactionItems.php";
@@ -40,6 +46,7 @@ try {
                 SaveJson_v3ProductList_Products::main();
                 SaveJson_v4ProductInfoAttributes_Products::main();
                 SaveJson_v4ProductInfoAttributes_ModelProducts::main();
+                SaveJson_v4ProductInfoAttributes_Images::main();
                 SaveJson_v4ProductInfoAttributes_Attributes::main();
                 SaveJson_v4ProductInfoAttributes_AttributesValues::main();
                 SaveJson_v3ProductInfoList_Products::main();
@@ -48,6 +55,11 @@ try {
                 SaveJson_v3ProductInfoList_ModelProducts::main();
                 SaveJson_v3ProductInfoList_ProductVisabilityDetails::main();
                 SaveJson_v3ProductInfoList_ProductStatuses::main();
+                SaveJson_v3ProductInfoList_Barcodes::main();
+                SaveJson_v3ProductInfoList_Images::main();
+                SaveJson_v3ProductInfoList_360Images::main();
+                SaveJson_v3ProductInfoList_PrimaryImages::main();
+                SaveJson_v3ProductInfoList_ColorImages::main();
                 SaveJson_v3FinanceTransactionsList_Transactions::main();
                 SaveJson_v3FinanceTransactionsList_TransactionPostings::main();
                 SaveJson_v3FinanceTransactionsList_TransactionItems::main();
