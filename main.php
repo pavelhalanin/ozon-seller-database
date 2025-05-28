@@ -12,6 +12,8 @@ try {
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductList_Products.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_Products.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_ModelProducts.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_Attributes.php";
+    include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v4ProductInfoAttributes_AttributesValues.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_Products.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_ProductSources.php";
     include_once "$HOME/_helpers/json-to-normal-json/SaveJson_v3ProductInfoList_ProductCommissions.php";
@@ -38,6 +40,8 @@ try {
                 SaveJson_v3ProductList_Products::main();
                 SaveJson_v4ProductInfoAttributes_Products::main();
                 SaveJson_v4ProductInfoAttributes_ModelProducts::main();
+                SaveJson_v4ProductInfoAttributes_Attributes::main();
+                SaveJson_v4ProductInfoAttributes_AttributesValues::main();
                 SaveJson_v3ProductInfoList_Products::main();
                 SaveJson_v3ProductInfoList_ProductSources::main();
                 SaveJson_v3ProductInfoList_ProductCommissions::main();

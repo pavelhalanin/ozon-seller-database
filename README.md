@@ -382,6 +382,26 @@ API:
     - `model_id` - id модели
     - `count` - количество
 
+База данных: `database.sqlite`
+- Таблица: `OZN_v4ProductInfoAttributes_Attributes`
+- Поля:
+    - `custom_auto_increment` - авто инкремент
+    - `custom_id` - мой произвольный id (`<product_id>.attributes[<j>]`)
+    - `product_id` - id продукта
+    - `id` - id атрибута
+    - `complex_id` - id сложного атрибута
+
+База данных: `database.sqlite`
+- Таблица: `OZN_v4ProductInfoAttributes_AttributesValues`
+- Поля:
+    - `custom_auto_increment` - авто инкремент
+    - `custom_id` - мой произвольный id (`<product_id>.attributes[<j>].values[<k>]`)
+    - `product_id` - id продукта
+    - `attribute_id` - id атрибута
+    - `atribute_complex_id` - id сложного атрибута
+    - `dictionary_value_id` - id значения словаря
+    - `value` - значение
+
 ## Приведение /v3/product/info/list/ в номарльную форму базы данных
 
 База данных: `database.sqlite`
